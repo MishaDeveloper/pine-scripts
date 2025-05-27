@@ -1,0 +1,20 @@
+//@version=5
+strategy("Simple MA Crossover Strategy", overlay=true)
+
+fastLength = input.int(9, title="Fast MA")
+slowLength = input.int(21, title="Slow MA")
+
+fastMA = ta.sma(close, fastLength)
+slowMA = ta.sma(close, slowLength)
+
+plot(fastMA, color=color.blue)
+plot(slowMA, color=color.orange)
+
+longCondition = ta.crossover(fastMA, slowMA)
+shortCondition = ta.crossunder(fastMA, slowMA)
+
+if (longCondition)
+    strategy.entry("Buy", strategy.long)
+
+if (shortCondition)
+    strategy.entry("Sell", strategy.short)
